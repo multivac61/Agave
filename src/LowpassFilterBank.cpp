@@ -33,7 +33,7 @@ struct LowpassFilterBank : Module {
 		NUM_LIGHTS
 	};
 
-	float sampleRate = engineGetSampleRate();
+	float sampleRate = APP->engine->getSampleRate();
 
 	// Declare array of filters
 	std::array<RCFilter, NUM_OUTPUTS> filters;
@@ -42,7 +42,8 @@ struct LowpassFilterBank : Module {
 	std::array<float, NUM_OUTPUTS> cutoffFrequencies = {{78.0f, 198.0f, 373.0f, 692.0f, 1411.0f, 3.0e3f}};
 
 	// Derived class constructor
-	LowpassFilterBank() : Module(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS) {
+	LowpassFilterBank() {
+        config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
 		
 		// Initialize filters
 		auto *fc = begin(cutoffFrequencies);
@@ -80,21 +81,18 @@ void LowpassFilterBank::step() {
 void LowpassFilterBank::onSampleRateChange() {
 
 	for(auto &filter : filters)
-		filter.setSampleRate(engineGetSampleRate());
+		filter.setSampleRate(APP->engine->getSampleRate());
 
 }
 
-LowpassFilterBankWidget::LowpassFilterBankWidget() {
-	LowpassFilterBank *module = new LowpassFilterBank();
+struct LowpassFilterBankWidget : ModuleWidget {
+    LowpassFilterBankWidget(LowpassFilterBank* module);
+};
+
+LowpassFilterBankWidget::LowpassFilterBankWidget(LowpassFilterBank* module) {
 	setModule(module);
 	box.size = Vec(4 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT);
-
-	{
-		SVGPanel *panel = new SVGPanel();
-		panel->box.size = box.size;
-		panel->setBackground(SVG::load(assetPlugin(plugin, "res/TestGeneratorPanel.svg")));
-		addChild(panel);
-	}
+    setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/TestGeneratorPanel.svg")));
 
 	// SIGNAL INPUT
 	addInput(createInput<PJ301MPort>(Vec(18, 20), module, LowpassFilterBank::SIGNAL_INPUT));
@@ -106,5 +104,6 @@ LowpassFilterBankWidget::LowpassFilterBankWidget() {
 	addOutput(createOutput<PJ301MPort>(Vec(18, 230), module, LowpassFilterBank::FILTER_692_OUTPUT));
 	addOutput(createOutput<PJ301MPort>(Vec(18, 280), module, LowpassFilterBank::FILTER_1411_OUTPUT));
 	addOutput(createOutput<PJ301MPort>(Vec(18, 330), module, LowpassFilterBank::FILTER_HIGH_OUTPUT));
-
 }
+
+Model* modelLowpassFilterBank = createModel<LowpassFilterBank, LowpassFilterBankWidget>("LowpassFilterBank");

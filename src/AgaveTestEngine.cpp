@@ -24,7 +24,7 @@ struct AgaveTestEngine : Module {
 		NUM_LIGHTS
 	};
 
-	float sampleRate = engineGetSampleRate();
+	float sampleRate = APP->engine->getSampleRate();
 
 	float phase = 0.0;
 	float blinkPhase = 0.0;
@@ -32,11 +32,15 @@ struct AgaveTestEngine : Module {
 	DPWSawtooth sawtoothGenerator{sampleRate};
 	DPWSquare squareWaveGenerator{sampleRate};
 
-	AgaveTestEngine() : Module(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS) {}
+	AgaveTestEngine();
 	void step() override;
 	void onSampleRateChange() override;
 };
 
+AgaveTestEngine::AgaveTestEngine() {
+    config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
+    configParam(PITCH_PARAM, -4.0f, 4.0f, 0.0f, "Pitch");
+}
 
 void AgaveTestEngine::step() {
 
@@ -46,7 +50,7 @@ void AgaveTestEngine::step() {
 
 	// Compute the frequency from the pitch parameter
 	float pitch = params[PITCH_PARAM].value;
-	pitch = clampf(pitch, -4.0f, 4.0f);
+	pitch = clamp(pitch, -4.0f, 4.0f);
 	float freq = 440.0f * std::pow(2.0f, pitch);
 
 	// Accumulate the phase
@@ -69,35 +73,33 @@ void AgaveTestEngine::step() {
 	outputs[SQUARE_OUTPUT].value = 5.0f * squareWaveGenerator.getSquareWaveform();
 
 	// Generate white noise
-	outputs[NOISE_OUTPUT].value = 5.0f * (2.0f * randomf() - 1.0f);
+	outputs[NOISE_OUTPUT].value = 5.0f * (2.0f * random::uniform() - 1.0f);
 
 }
 
 void AgaveTestEngine::onSampleRateChange() {
-	sampleRate = engineGetSampleRate();
+	sampleRate = APP->engine->getSampleRate();
 	sawtoothGenerator.setSampleRate(sampleRate);
 	squareWaveGenerator.setSampleRate(sampleRate);
 }
 
-AgaveTestEngineWidget::AgaveTestEngineWidget() {
-	AgaveTestEngine *module = new AgaveTestEngine();
+struct AgaveTestEngineWidget : ModuleWidget {
+	AgaveTestEngineWidget(AgaveTestEngine* module);
+};
+
+AgaveTestEngineWidget::AgaveTestEngineWidget(AgaveTestEngine* module) {
 	setModule(module);
 	box.size = Vec(4 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT);
-
-	{
-		SVGPanel *panel = new SVGPanel();
-		panel->box.size = box.size;
-		panel->setBackground(SVG::load(assetPlugin(plugin, "res/TestGeneratorPanel.svg")));
-		addChild(panel);
-	}
+    setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/TestGeneratorPanel.svg")));
 
 	// KNOB
-	addParam(createParam<Davies1900hBlackKnob>(Vec(13, 87), module, AgaveTestEngine::PITCH_PARAM, -4.0, 4.0, 0.0));
+	addParam(createParam<Davies1900hBlackKnob>(Vec(13, 87), module, AgaveTestEngine::PITCH_PARAM));
 
 	// SINE OUTPUT
 	addOutput(createOutput<PJ301MPort>(Vec(18, 180), module, AgaveTestEngine::SINE_OUTPUT));
 	addOutput(createOutput<PJ301MPort>(Vec(18, 230), module, AgaveTestEngine::SAW_OUTPUT));
 	addOutput(createOutput<PJ301MPort>(Vec(18, 280), module, AgaveTestEngine::SQUARE_OUTPUT));
 	addOutput(createOutput<PJ301MPort>(Vec(18, 330), module, AgaveTestEngine::NOISE_OUTPUT));
-
 }
+
+Model* modelTestEngine = createModel<AgaveTestEngine, AgaveTestEngineWidget>("AgaveTestEngine");

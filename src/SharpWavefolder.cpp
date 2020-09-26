@@ -40,13 +40,19 @@ struct SharpWavefolder : Module {
 		NUM_LIGHTS
 	};
 
-	float sampleRate = engineGetSampleRate();
+	float sampleRate = APP->engine->getSampleRate();
 
 	std::array<Wavefolder, 4> folder;
 
 	HardClipper clipper;
 
-	SharpWavefolder() : Module(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS) {}
+	SharpWavefolder() {
+        config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
+        configParam(FOLDS_PARAM, 0.9f, 10.f, 0.9f, "Folds");
+        configParam(FOLD_ATT_PARAM, -1.0f, 1.0f, 0.0f, "Folds CV");
+        configParam(SYMM_PARAM, -5.0f, 5.0f, 0.0f, "Symmetry");
+        configParam(SYMM_ATT_PARAM, -1.0f, 1.0f, 0.0f, "Symmetry CV");
+    }
 
 	void step() override;
 	void onSampleRateChange() override;
@@ -61,11 +67,11 @@ void SharpWavefolder::step() {
 
 	// Read fold cv control
 	float foldLevel = params[FOLDS_PARAM].value + params[FOLD_ATT_PARAM].value*std::abs(inputs[FOLD_CV_INPUT].value);
-	foldLevel = clampf(foldLevel, -10.0f, 10.0f);
+	foldLevel = clamp(foldLevel, -10.0f, 10.0f);
 
 	// Read symmetry cv control
 	float symmLevel = params[SYMM_PARAM].value + 0.5f*params[SYMM_ATT_PARAM].value*inputs[SYMM_CV_INPUT].value;
-	symmLevel = clampf(symmLevel, -5.0f, 5.0f);
+	symmLevel = clamp(symmLevel, -5.0f, 5.0f);
 
 	// Implement wavefolders
 	float foldedOutput = input*foldLevel +  symmLevel;
@@ -85,26 +91,23 @@ void SharpWavefolder::step() {
 }
 
 void SharpWavefolder::onSampleRateChange() {
-	sampleRate = engineGetSampleRate();
+	sampleRate = APP->engine->getSampleRate();
 }
 
-SharpWavefolderWidget::SharpWavefolderWidget() {
-	SharpWavefolder *module = new SharpWavefolder();
+struct SharpWavefolderWidget : ModuleWidget {
+    SharpWavefolderWidget(SharpWavefolder* module);
+};
+
+SharpWavefolderWidget::SharpWavefolderWidget(SharpWavefolder* module) {
 	setModule(module);
 	box.size = Vec(4 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT);
-
-	{
-		SVGPanel *panel = new SVGPanel();
-		panel->box.size = box.size;
-		panel->setBackground(SVG::load(assetPlugin(plugin, "res/TestGeneratorPanel.svg")));
-		addChild(panel);
-	}
+    setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/TestGeneratorPanel.svg")));
 
 	// KNOBS
-	addParam(createParam<Davies1900hBlackKnob>(Vec(12, 70), module, SharpWavefolder::FOLDS_PARAM, 0.90, 10.0, 0.90));
-	addParam(createParam<Trimpot>(Vec(20, 120), module, SharpWavefolder::FOLD_ATT_PARAM, -1.0, 1.0, 0.0));
-	addParam(createParam<Davies1900hBlackKnob>(Vec(12, 200), module, SharpWavefolder::SYMM_PARAM, -5.0, 5.0, 0.0));
-	addParam(createParam<Trimpot>(Vec(20, 250), module, SharpWavefolder::SYMM_ATT_PARAM, -1.0, 1.0, 0.0));
+	addParam(createParam<Davies1900hBlackKnob>(Vec(12, 70), module, SharpWavefolder::FOLDS_PARAM));
+	addParam(createParam<Trimpot>(Vec(20, 120), module, SharpWavefolder::FOLD_ATT_PARAM));
+	addParam(createParam<Davies1900hBlackKnob>(Vec(12, 200), module, SharpWavefolder::SYMM_PARAM));
+	addParam(createParam<Trimpot>(Vec(20, 250), module, SharpWavefolder::SYMM_ATT_PARAM));
 
 	// IN JACKS
 	addInput(createInput<PJ301MPort>(Vec(18, 20), module, SharpWavefolder::SIGNAL_INPUT));
@@ -117,5 +120,6 @@ SharpWavefolderWidget::SharpWavefolderWidget() {
 	// LEDs
 	addChild(createLight<MediumLight<GreenLight>>(Vec(46, 20), module, SharpWavefolder::BLINK_LIGHT));
 	addChild(createLight<MediumLight<RedLight>>(Vec(46, 340), module, SharpWavefolder::OUTPUT_LIGHT));
-
 }
+
+Model* modelSharpWavefolder = createModel<SharpWavefolder, SharpWavefolderWidget>("SharpWavefolder");

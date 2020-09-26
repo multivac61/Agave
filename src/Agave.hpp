@@ -3,29 +3,12 @@
 
 using namespace rack;
 
-extern Plugin *plugin;
+// Declare the Plugin, defined in plugin.cpp
+extern Plugin *pluginInstance;
 
-////////////////////
-// module widgets
-////////////////////
-
-struct AgaveTestEngineWidget : ModuleWidget {
-	AgaveTestEngineWidget();
-};
-
-struct LowpassFilterBankWidget : ModuleWidget {
-	LowpassFilterBankWidget();
-};
-
-struct SharpWavefolderWidget : ModuleWidget {
-	SharpWavefolderWidget();
-};
-
-struct MetallicNoiseWidget : ModuleWidget {
-	MetallicNoiseWidget();
-};
-
-struct MS20VCFWidget : ModuleWidget {
-	MS20VCFWidget();
-};
-
+// Declare each Model, defined in each module source file
+extern Model* modelTestEngine;
+extern Model* modelLowpassFilterBank;
+extern Model* modelSharpWavefolder;
+extern Model* modelMetallicNoise;
+extern Model* modelMS20VCF;

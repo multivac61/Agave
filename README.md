@@ -1,3 +1,5 @@
+This repository is a port of Fabian Esqueda's [Agave](https://github.com/fabianesqueda/Agave) modules for VCV Rack, updated for Rack version 1. So far the only changes made to the original code have made with the intention of allowing the plugin to compile with the latest VCV Rack API, no other changes have been made.
+
 # Agave
 
 This is a collection of free open-source modules for VCV Rack. This is an ongoing project, so the number of modules is likely to grow rapidly over the following weeks!

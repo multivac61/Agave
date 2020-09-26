@@ -37,7 +37,7 @@ struct MetallicNoise : Module {
 		NUM_LIGHTS
 	};
 
-	float sampleRate = engineGetSampleRate();
+	float sampleRate = APP->engine->getSampleRate();
 
 	// Declare 2 arrays of oscillators
 	std::array<DPWSquare, 6> squareWaves808;
@@ -47,7 +47,9 @@ struct MetallicNoise : Module {
 	std::array<float, 6> oscFrequencies808 = {{205.3f, 369.4f, 304.4f, 522.3f, 800.0f, 540.4f}};
 	std::array<float, 6> oscFrequencies606 = {{244.4f, 304.6f, 364.5f, 412.1f, 432.4f, 604.1f}};
 
-	MetallicNoise() : Module(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS) {
+	MetallicNoise() {
+        config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
+
 		for(auto &squareWave : squareWaves808)
 			squareWave.setSampleRate(sampleRate);
 		for(auto &squareWave : squareWaves606)
@@ -83,25 +85,23 @@ void MetallicNoise::step() {
 
 void MetallicNoise::onSampleRateChange() {
 	for(auto & squareWave : squareWaves808)
-		squareWave.setSampleRate(engineGetSampleRate());
+		squareWave.setSampleRate(APP->engine->getSampleRate());
 	for(auto & squareWave : squareWaves606)
-		squareWave.setSampleRate(engineGetSampleRate());
+		squareWave.setSampleRate(APP->engine->getSampleRate());
 }
 
-MetallicNoiseWidget::MetallicNoiseWidget() {
-	MetallicNoise *module = new MetallicNoise();
+struct MetallicNoiseWidget : ModuleWidget {
+    MetallicNoiseWidget(MetallicNoise* module);
+};
+
+MetallicNoiseWidget::MetallicNoiseWidget(MetallicNoise* module) {
 	setModule(module);
 	box.size = Vec(4 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT);
-
-	{
-		SVGPanel *panel = new SVGPanel();
-		panel->box.size = box.size;
-		panel->setBackground(SVG::load(assetPlugin(plugin, "res/TestGeneratorPanel.svg")));
-		addChild(panel);
-	}
+    setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/TestGeneratorPanel.svg")));
 
 	// SINE OUTPUT
 	addOutput(createOutput<PJ301MPort>(Vec(18, 100), module, MetallicNoise::NOISE_808_OUTPUT));
 	addOutput(createOutput<PJ301MPort>(Vec(18, 250), module, MetallicNoise::NOISE_606_OUTPUT));
-
 }
+
+Model* modelMetallicNoise = createModel<MetallicNoise, MetallicNoiseWidget>("MetallicNoise");

@@ -1,0 +1,58 @@
+{
+  "slug": "Agave",
+  "name": "Agave",
+  "version": "1.0.0",
+  "license": "GPL-3.0-or-later",
+  "brand": "chowdsp",
+  "author": "Fabian Eqsueda",
+  "authorEmail": "",
+  "authorUrl": "",
+  "pluginUrl": "https://github.com/fabianesqueda/Agave",
+  "manualUrl": "https://github.com/fabianesqueda/Agave",
+  "sourceUrl": "https://github.com/fabianesqueda/Agave",
+  "donateUrl": "",
+  "changelogUrl": "",
+  "modules": [
+    {
+      "slug": "AgaveTestEngine",
+      "name": "Agave Test Engine",
+      "description": "Test engine for Agave plugin",
+      "tags": [
+        "Utility"
+      ]
+    },
+    {
+      "slug": "LowpassFilterBank",
+      "name": "Agave Lowpass Filter Bank",
+      "description": "Bank of RC lowpass filters",
+      "tags": [
+        "Filter"
+      ]
+    },
+    {
+      "slug": "SharpWavefolder",
+      "name": "Agave Fxld",
+      "description": "Buchla-style wavefolder",
+      "tags": [
+        "Waveshaper"
+      ]
+    },
+    {
+      "slug": "MetallicNoise",
+      "name": "Agave Metallic",
+      "description": "Noise generator for cymbals",
+      "tags": [
+        "Noise"
+      ]
+    },
+    {
+      "slug": "MS20VCF",
+      "name": "Agave VCF",
+      "description": "VCF modelled after the Korg MS-20",
+      "tags": [
+        "Filter",
+        "Physical modeling"
+      ]
+    }
+  ]
+}

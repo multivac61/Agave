@@ -126,7 +126,7 @@ public:
 	        V_n[0] = V_n[0] - newtonRatio[0];
 	        V_n[1] = V_n[1] - newtonRatio[1];
 
-	        if ( (std::abs(newtonRatio[1]) + std::abs(newtonRatio[2])) < 0.0001f)
+	        if ( (std::abs(newtonRatio[0]) + std::abs(newtonRatio[1])) < 0.0001f)
 	        	break;
 
 		}
