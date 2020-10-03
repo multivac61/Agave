@@ -14,6 +14,7 @@
 #include <array>
 
 #include "dsp/Waveshaping.hpp"
+#include "Components.hpp"
 
 struct SharpWavefolder : Module {
 
@@ -101,25 +102,29 @@ struct SharpWavefolderWidget : ModuleWidget {
 SharpWavefolderWidget::SharpWavefolderWidget(SharpWavefolder* module) {
 	setModule(module);
 	box.size = Vec(4 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT);
-    setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/TestGeneratorPanel.svg")));
+    setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Fxld.svg")));
 
-	// KNOBS
-	addParam(createParam<Davies1900hBlackKnob>(Vec(12, 70), module, SharpWavefolder::FOLDS_PARAM));
-	addParam(createParam<Trimpot>(Vec(20, 120), module, SharpWavefolder::FOLD_ATT_PARAM));
-	addParam(createParam<Davies1900hBlackKnob>(Vec(12, 200), module, SharpWavefolder::SYMM_PARAM));
-	addParam(createParam<Trimpot>(Vec(20, 250), module, SharpWavefolder::SYMM_ATT_PARAM));
+    // SCREWS
+    addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH * 1.5, 0)));
+    addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH * 1.5, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+
+	// // KNOBS
+	addParam(createParamCentered<Davies1900hBlackKnob>(mm2px(Vec(10.16, 39)), module, SharpWavefolder::FOLDS_PARAM));
+	addParam(createParamCentered<Trimpot>(mm2px(Vec(10.16, 51.5)), module, SharpWavefolder::FOLD_ATT_PARAM));
+	addParam(createParamCentered<Davies1900hBlackKnob>(mm2px(Vec(10.16, 81.5)), module, SharpWavefolder::SYMM_PARAM));
+	addParam(createParamCentered<Trimpot>(mm2px(Vec(10.16, 94.0)), module, SharpWavefolder::SYMM_ATT_PARAM));
 
 	// IN JACKS
-	addInput(createInput<PJ301MPort>(Vec(18, 20), module, SharpWavefolder::SIGNAL_INPUT));
-	addInput(createInput<PJ301MPort>(Vec(18, 150), module, SharpWavefolder::FOLD_CV_INPUT));
-	addInput(createInput<PJ301MPort>(Vec(18, 280), module, SharpWavefolder::SYMM_CV_INPUT));
+	addInput(createInputCentered<LightPort>(mm2px(Vec(10.16, 20)), module, SharpWavefolder::SIGNAL_INPUT));
+	addInput(createInputCentered<LightPort>(mm2px(Vec(10.16, 60.0)), module, SharpWavefolder::FOLD_CV_INPUT));
+	addInput(createInputCentered<LightPort>(mm2px(Vec(10.16, 102.0)), module, SharpWavefolder::SYMM_CV_INPUT));
 
 	// OUT JACKS
-	addOutput(createOutput<PJ301MPort>(Vec(18, 340), module, SharpWavefolder::FOLDED_OUTPUT));
+	addOutput(createOutputCentered<DarkPort>(mm2px(Vec(10.16, 115)), module, SharpWavefolder::FOLDED_OUTPUT));
 
 	// LEDs
-	addChild(createLight<MediumLight<GreenLight>>(Vec(46, 20), module, SharpWavefolder::BLINK_LIGHT));
-	addChild(createLight<MediumLight<RedLight>>(Vec(46, 340), module, SharpWavefolder::OUTPUT_LIGHT));
+	addChild(createLight<MediumLight<GreenLight>>(mm2px(Vec(14.5, 15.5)), module, SharpWavefolder::BLINK_LIGHT));
+	addChild(createLight<MediumLight<RedLight>>(mm2px(Vec(14.5, 110.5)), module, SharpWavefolder::OUTPUT_LIGHT));
 }
 
 Model* modelSharpWavefolder = createModel<SharpWavefolder, SharpWavefolderWidget>("SharpWavefolder");

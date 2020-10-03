@@ -8,6 +8,7 @@
 
 #include "Agave.hpp"
 #include "dsp/MS20Filter.hpp"
+#include "Components.hpp"
 
 struct MS20VCF : Module {
 
@@ -91,18 +92,25 @@ struct MS20VCFWidget : ModuleWidget {
 MS20VCFWidget::MS20VCFWidget(MS20VCF* module) {
 	setModule(module);
 	box.size = Vec(4 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT);
-    setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/TestGeneratorPanel.svg")));
+    setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/MS20.svg")));
 
-	addInput(createInput<PJ301MPort>(Vec(18, 20), module, MS20VCF::SIGNAL_INPUT));
+    // SCREWS
+    addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH * 1.5, 0)));
+    addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH * 1.5, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
-	addParam(createParam<Davies1900hBlackKnob>(Vec(12, 70), module, MS20VCF::FREQ_PARAM));
-	addParam(createParam<Trimpot>(Vec(20, 120), module, MS20VCF::CV_ATT_PARAM));
+    // AUDIO INPUT
+	addInput(createInputCentered<LightPort>(mm2px(Vec(10.16, 20)), module, MS20VCF::SIGNAL_INPUT));
 
-	addInput(createInput<PJ301MPort>(Vec(18, 150), module, MS20VCF::FREQ_CV_PARAM));
+    // FREQUENCY PARAM
+	addParam(createParamCentered<Davies1900hBlackKnob>(mm2px(Vec(10.16, 42.5)), module, MS20VCF::FREQ_PARAM));
+	addParam(createParamCentered<Trimpot>(mm2px(Vec(10.16, 55.0)), module, MS20VCF::CV_ATT_PARAM));
+	addInput(createInputCentered<LightPort>(mm2px(Vec(10.16, 65.0)), module, MS20VCF::FREQ_CV_PARAM));
 
-	addParam(createParam<Davies1900hBlackKnob>(Vec(12, 200), module, MS20VCF::RES_PARAM));
+    // Resonance PARAM
+	addParam(createParamCentered<Davies1900hBlackKnob>(mm2px(Vec(10.16, 90)), module, MS20VCF::RES_PARAM));
 
-	addOutput(createOutput<PJ301MPort>(Vec(18, 340), module, MS20VCF::SIGNAL_OUTPUT));
+    // AUDIO OUTPUT
+	addOutput(createOutputCentered<DarkPort>(mm2px(Vec(10.16, 115)), module, MS20VCF::SIGNAL_OUTPUT));
 }
 
 Model* modelMS20VCF = createModel<MS20VCF, MS20VCFWidget>("MS20VCF");

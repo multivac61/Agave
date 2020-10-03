@@ -7,7 +7,7 @@ using namespace rack;
 extern Plugin *pluginInstance;
 
 // Declare each Model, defined in each module source file
-extern Model* modelTestEngine;
+// extern Model* modelTestEngine;
 extern Model* modelLowpassFilterBank;
 extern Model* modelSharpWavefolder;
 extern Model* modelMetallicNoise;

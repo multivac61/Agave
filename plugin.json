@@ -4,23 +4,15 @@
   "version": "1.0.0",
   "license": "CC0-1.0",
   "brand": "Agave",
-  "author": "Fabian Eqsueda",
-  "authorEmail": "",
+  "author": "Fabian Eqsueda, Jatin Chowdhury",
+  "authorEmail": "jatin@ccrma.stanford.edu",
   "authorUrl": "",
-  "pluginUrl": "https://github.com/fabianesqueda/Agave",
-  "manualUrl": "https://github.com/fabianesqueda/Agave",
-  "sourceUrl": "https://github.com/fabianesqueda/Agave",
+  "pluginUrl": "https://github.com/jatinchowdhury18/Agave",
+  "manualUrl": "https://github.com/jatinchowdhury18/Agave",
+  "sourceUrl": "https://github.com/jatinchowdhury18/Agave",
   "donateUrl": "",
   "changelogUrl": "",
   "modules": [
-    {
-      "slug": "AgaveTestEngine",
-      "name": "Agave Test Engine",
-      "description": "Test engine for Agave plugin",
-      "tags": [
-        "Utility"
-      ]
-    },
     {
       "slug": "LowpassFilterBank",
       "name": "Agave Lowpass Filter Bank",
@@ -34,7 +26,8 @@
       "name": "Agave Fxld",
       "description": "Buchla-style wavefolder",
       "tags": [
-        "Waveshaper"
+        "Waveshaper",
+        "Effect"
       ]
     },
     {
@@ -51,7 +44,8 @@
       "description": "VCF modelled after the Korg MS-20",
       "tags": [
         "Filter",
-        "Physical modeling"
+        "Physical modeling",
+        "Effect"
       ]
     }
   ]

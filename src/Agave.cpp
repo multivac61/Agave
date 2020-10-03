@@ -8,7 +8,7 @@ void init(rack::Plugin *p) {
 	pluginInstance = p;
 
 	// Add modules here
-	p->addModel(modelTestEngine);
+	// p->addModel(modelTestEngine);
 	p->addModel(modelLowpassFilterBank);
 	p->addModel(modelSharpWavefolder);
 	p->addModel(modelMetallicNoise);
