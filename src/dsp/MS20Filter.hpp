@@ -41,10 +41,18 @@ private:
 	float V_n1[2] = {0.0, 0.0};
 	float Vin_n1 = 0.0;
 
-	float a1_n = 0.0;
-	float a2_n = 0.0;
-	float a1_n1 = 0.0;
-	float a2_n1 = 0.0;
+    // state variables
+	float tanh_a1_n1 = 0.0;
+	float tanh_a2_n1 = 0.0;
+
+    // parameter variables
+    float k = 0.0f;
+    float wc = 0.0f;
+
+    // temporary variables (related to parameters)
+    float half_T_wc = 0.5f*T*wc;
+    float half_T_wc_alpha = half_T_wc * alpha;
+    float half_T_wc_beta = half_T_wc * beta;
 
 public: 
 	MS20Filter() {}
@@ -66,45 +74,57 @@ public:
 		V_n1[1] = 0.0f;
 	}
 	
-	float signum(float x) {
+	inline float signum(float x) const noexcept {
 		return (x > 0.0f) ? 1.0f : ((x < 0.0f) ? -1.0f : 0.0f);
 	}
 
-	float fx(float x) {
-		return signum(x)*diodeDrop[int (floor(std::abs(x) * 1000.0f))];
+	inline float fx(float x) const noexcept {
+		return signum(x)*diodeDrop[int (x)];
 	}
 	
-	float dfx(float x) {
-		return diodeDropDx[int (floor(std::abs(x) * 1000.0f))];
+	inline float dfx(float x) const noexcept {
+		return diodeDropDx[int (x)];
 	}
 
-	void process(float Vin, float fc, float resonance) {
-
-		float k = resonance;
+    void setParams(float fc, float resonance) {
+        k = resonance;
 
 		// Cutoff and prewarping
-		float wc = 2*M_PI*fc;
+		wc = 2*M_PI*fc;
 		wc = 2.0f*sampleRate*std::tan(0.5f*wc/sampleRate)/alpha;
 
+        half_T_wc = 0.5f*T*wc;
+        half_T_wc_alpha = half_T_wc * alpha;
+        half_T_wc_beta = half_T_wc * beta;
+    }
+
+	void process(float Vin) {
+        float tanh_a1_n, tanh_a2_n;
+
 		for (int i=0; i<10; i++) {
+            float input = floor(std::abs(k*V_n[1]) * 1000.0f);
+			float feedbackNL_n = fx(input);
+			float dxFeedbackNL_n = dfx(input);
 
-			float feedbackNL_n = fx( k*(V_n[1]) ) ;
-			float dxFeedbackNL_n = dfx( k*(V_n[1]) );
+			float a1_n = alpha*(Vin - V_n[0] - feedbackNL_n);
+			float a2_n = beta*(V_n[0] - V_n[1] + feedbackNL_n);
 
-			a1_n = alpha*(Vin - V_n[0] - feedbackNL_n);
-			a2_n = beta*(V_n[0] - V_n[1] + feedbackNL_n);
+            tanh_a1_n = std::tanh(a1_n);
+            tanh_a2_n = std::tanh(a2_n);
+            const float tanh_a1_n_2 = tanh_a1_n * tanh_a1_n;
+            const float tanh_a2_n_2 = tanh_a2_n * tanh_a2_n;
 
 			std::array<float,2> F;
-			F[0] = V_n[0] - V_n1[0] - 0.5f*T*wc*( std::tanh(a1_n) + std::tanh(a1_n1) );
-        	F[1] = V_n[1] - V_n1[1] - 0.5f*T*wc*( std::tanh(a2_n) + std::tanh(a2_n1) );
+			F[0] = V_n[0] - V_n1[0] - half_T_wc*( tanh_a1_n + tanh_a1_n1 );
+        	F[1] = V_n[1] - V_n1[1] - half_T_wc*( tanh_a2_n + tanh_a2_n1 );
 
         	// Jacobian matrix
 			std::array<std::array<float,2>,2> Jf;
-        	Jf[0][0] = 1.0f + 0.5f*T*wc*alpha*(1.0f - std::tanh(a1_n)*std::tanh(a1_n));
-        	Jf[0][1] = 0.5f*T*wc*alpha*(1.0f - std::tanh(a1_n)*std::tanh(a1_n))*k*dxFeedbackNL_n;
+        	Jf[0][0] = 1.0f + half_T_wc_alpha*(1.0f - tanh_a1_n_2);
+        	Jf[0][1] = half_T_wc_alpha*(1.0f - tanh_a1_n_2)*k*dxFeedbackNL_n;
         
-        	Jf[1][0] = -0.5f*T*wc*beta*(1.0f - std::tanh(a2_n)*std::tanh(a2_n));
-        	Jf[1][1] = 1.0f - 0.5f*T*wc*beta*(1.0f - std::tanh(a2_n)*std::tanh(a2_n))*(k*dxFeedbackNL_n - 1);
+        	Jf[1][0] = -half_T_wc_beta*(1.0f - tanh_a2_n_2);
+        	Jf[1][1] = 1.0f - half_T_wc_beta*(1.0f - tanh_a2_n_2)*(k*dxFeedbackNL_n - 1);
 
         	// (Determinant)^-1
         	float one_det = 1.0f/( Jf[0][0]*Jf[1][1] - Jf[0][1]*Jf[1][0] );
@@ -136,13 +156,12 @@ public:
 		// Update states
 		V_n1[0] = V_n[0];
 		V_n1[1] = V_n[1];
-        a1_n1 = a1_n;
-		a2_n1 = a2_n;
+        tanh_a1_n1 = tanh_a1_n;
+		tanh_a2_n1 = tanh_a2_n;
 		Vin_n1 = Vin;
-
 	}
 
-	float getOutput() const {
+	inline float getOutput() const noexcept {
 		return output;
 	}
 
