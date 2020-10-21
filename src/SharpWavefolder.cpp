@@ -36,8 +36,6 @@ struct SharpWavefolder : Module {
 		NUM_OUTPUTS
 	};
 	enum LightIds {
-		BLINK_LIGHT,
-		OUTPUT_LIGHT,
 		NUM_LIGHTS
 	};
 
@@ -64,7 +62,6 @@ void SharpWavefolder::step() {
 
 	// Scale input to be within [-1 1]
 	float input = 0.2f * inputs[SIGNAL_INPUT].value;
-	lights[BLINK_LIGHT].value = (input > 1.0f) ? 1.0f : 1.0f;
 
 	// Read fold cv control
 	float foldLevel = params[FOLDS_PARAM].value + params[FOLD_ATT_PARAM].value*std::abs(inputs[FOLD_CV_INPUT].value);
@@ -75,14 +72,13 @@ void SharpWavefolder::step() {
 	symmLevel = clamp(symmLevel, -5.0f, 5.0f);
 
 	// Implement wavefolders
-	float foldedOutput = input*foldLevel +  symmLevel;
+	float foldedOutput = input*foldLevel + symmLevel;
 	for (int i=0; i<4; i++) {
 		folder[i].process(foldedOutput);
 		foldedOutput = folder[i].getFoldedOutput();
 	}
 
 	// Saturator
-	lights[OUTPUT_LIGHT].value = (foldedOutput >= 1.0f) ? 1.0f : 0.0f;
 	clipper.process(foldedOutput);
 	foldedOutput = clipper.getClippedOutput();
 
@@ -99,32 +95,25 @@ struct SharpWavefolderWidget : ModuleWidget {
     SharpWavefolderWidget(SharpWavefolder* module);
 };
 
+namespace Comps = AgaveComponents;
 SharpWavefolderWidget::SharpWavefolderWidget(SharpWavefolder* module) {
 	setModule(module);
-	box.size = Vec(4 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT);
-    setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Fxld.svg")));
+    setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/FXLD.svg")));
+    Comps::createScrews<Comps::ScrewMetal>(*this);
 
-    // SCREWS
-    addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH * 1.5, 0)));
-    addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH * 1.5, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
-
-	// // KNOBS
-	addParam(createParamCentered<Davies1900hBlackKnob>(mm2px(Vec(10.16, 39)), module, SharpWavefolder::FOLDS_PARAM));
-	addParam(createParamCentered<Trimpot>(mm2px(Vec(10.16, 51.5)), module, SharpWavefolder::FOLD_ATT_PARAM));
-	addParam(createParamCentered<Davies1900hBlackKnob>(mm2px(Vec(10.16, 81.5)), module, SharpWavefolder::SYMM_PARAM));
-	addParam(createParamCentered<Trimpot>(mm2px(Vec(10.16, 94.0)), module, SharpWavefolder::SYMM_ATT_PARAM));
+	// KNOBS
+	addParam(createParamCentered<Comps::Knob>(mm2px(Vec(8.82, 32.5)), module, SharpWavefolder::FOLDS_PARAM));
+	addParam(createParamCentered<Comps::SmallKnob>(mm2px(Vec(10.16, 50.0)), module, SharpWavefolder::FOLD_ATT_PARAM));
+	addParam(createParamCentered<Comps::Knob>(mm2px(Vec(8.82, 72.5)), module, SharpWavefolder::SYMM_PARAM));
+	addParam(createParamCentered<Comps::SmallKnob>(mm2px(Vec(10.16, 90.0)), module, SharpWavefolder::SYMM_ATT_PARAM));
 
 	// IN JACKS
-	addInput(createInputCentered<LightPort>(mm2px(Vec(10.16, 20)), module, SharpWavefolder::SIGNAL_INPUT));
-	addInput(createInputCentered<LightPort>(mm2px(Vec(10.16, 60.0)), module, SharpWavefolder::FOLD_CV_INPUT));
-	addInput(createInputCentered<LightPort>(mm2px(Vec(10.16, 102.0)), module, SharpWavefolder::SYMM_CV_INPUT));
+	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 17.5)), module, SharpWavefolder::SIGNAL_INPUT));
+	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 57.5)), module, SharpWavefolder::FOLD_CV_INPUT));
+	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 97.5)), module, SharpWavefolder::SYMM_CV_INPUT));
 
 	// OUT JACKS
-	addOutput(createOutputCentered<DarkPort>(mm2px(Vec(10.16, 115)), module, SharpWavefolder::FOLDED_OUTPUT));
-
-	// LEDs
-	addChild(createLight<MediumLight<GreenLight>>(mm2px(Vec(14.5, 15.5)), module, SharpWavefolder::BLINK_LIGHT));
-	addChild(createLight<MediumLight<RedLight>>(mm2px(Vec(14.5, 110.5)), module, SharpWavefolder::OUTPUT_LIGHT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 110.0)), module, SharpWavefolder::FOLDED_OUTPUT));
 }
 
 Model* modelSharpWavefolder = createModel<SharpWavefolder, SharpWavefolderWidget>("SharpWavefolder");

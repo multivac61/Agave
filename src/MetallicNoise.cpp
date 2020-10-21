@@ -95,18 +95,15 @@ struct MetallicNoiseWidget : ModuleWidget {
     MetallicNoiseWidget(MetallicNoise* module);
 };
 
+namespace Comps = AgaveComponents;
 MetallicNoiseWidget::MetallicNoiseWidget(MetallicNoise* module) {
 	setModule(module);
-	box.size = Vec(4 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT);
     setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Metallic.svg")));
-
-    // SCREWS
-    addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH * 1.5, 0)));
-    addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH * 1.5, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+    Comps::createScrews<Comps::ScrewMetal>(*this);
 
 	// SINE OUTPUT
-	addOutput(createOutputCentered<DarkPort>(mm2px(Vec(10.16, 40.0)), module, MetallicNoise::NOISE_808_OUTPUT));
-	addOutput(createOutputCentered<DarkPort>(mm2px(Vec(10.16, 80.0)), module, MetallicNoise::NOISE_606_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 40.0)), module, MetallicNoise::NOISE_808_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 80.0)), module, MetallicNoise::NOISE_606_OUTPUT));
 }
 
 Model* modelMetallicNoise = createModel<MetallicNoise, MetallicNoiseWidget>("MetallicNoise");

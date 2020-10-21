@@ -1,0 +1,27 @@
+<svg width="3.844mm" height="3.844mm" version="1.1" viewBox="0 0 3.844 3.844" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="linearGradient2730" x1="163" x2="163" y1="50.35" y2="59.91" gradientTransform="matrix(.2797 0 0 .2797 -5.105 38.31)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#525252" offset="0"/>
+   <stop stop-color="#21211f" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient2732" x1="163.2" x2="163.2" y1="59.4" y2="56.9" gradientTransform="matrix(.2733 0 0 .2733 -4.055 38.66)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#20201e" offset="0"/>
+   <stop stop-color="#20201e" stop-opacity="0" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient2734" x1="163.9" x2="162.3" y1="57.25" y2="50.88" gradientTransform="matrix(.2538 0 0 .2538 -.8957 39.64)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#434343" offset="0"/>
+   <stop stop-color="#535353" offset="1"/>
+  </linearGradient>
+ </defs>
+ <g transform="translate(-103.2 -72.83)">
+  <g transform="translate(-62.78 -61.99)">
+   <g transform="matrix(1.278,0,0,1.278,116.3,68.11)">
+    <circle cx="40.34" cy="53.7" r="1.504" fill="#4e4e4e" style="paint-order:normal"/>
+    <circle cx="40.34" cy="53.7" r="1.369" fill="url(#linearGradient2730)" style="paint-order:normal"/>
+    <path d="m39.14 53.56a1.208 1.208 0 0 0-0.0083 0.1345 1.208 1.208 0 0 0 1.208 1.208 1.208 1.208 0 0 0 1.208-1.208 1.208 1.208 0 0 0-0.0087-0.1309 1.253 1.253 0 0 1-1.199 0.8913 1.253 1.253 0 0 1-1.2-0.8948z" fill="url(#linearGradient2732)" style="paint-order:normal"/>
+    <circle cx="40.29" cy="53.41" r=".8251" fill="url(#linearGradient2734)" style="paint-order:normal"/>
+    <path d="m40.34 52.63c-0.1487 0-0.2685 0.1198-0.2685 0.2685v0.5368h-0.5368c-0.1487 0-0.2685 0.1198-0.2685 0.2685s0.1198 0.2683 0.2685 0.2683h0.5368v0.5369c0 0.1487 0.1198 0.2683 0.2685 0.2683s0.2685-0.1196 0.2685-0.2683v-0.5369h0.5368c0.1487 0 0.2685-0.1196 0.2685-0.2683s-0.1198-0.2685-0.2685-0.2685h-0.5368v-0.5368c0-0.1487-0.1198-0.2685-0.2685-0.2685z" fill="#212120" style="paint-order:normal"/>
+   </g>
+  </g>
+ </g>
+</svg>

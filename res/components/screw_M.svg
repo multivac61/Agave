@@ -1,0 +1,27 @@
+<svg width="3.844mm" height="3.844mm" version="1.1" viewBox="0 0 3.844 3.844" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <linearGradient id="linearGradient2724-9-7" x1="163" x2="163" y1="50.35" y2="59.91" gradientTransform="matrix(.3575 0 0 .3575 -47.94 111.2)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#b5b3b4" offset="0"/>
+   <stop stop-color="#9a9a9c" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient11728-3" x1="163.9" x2="162.3" y1="57.25" y2="50.88" gradientTransform="matrix(.3244 0 0 .3244 -42.47 112.7)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#c1c1c1" offset="0"/>
+   <stop stop-color="#c9c9c9" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient2726-0" x1="163.2" x2="163.2" y1="59.4" y2="56.9" gradientTransform="matrix(.3493 0 0 .3493 -46.53 111.7)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#a7a7a7" offset="0"/>
+   <stop stop-color="#c9c9c9" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient11744-0" x1="-43.43" x2="-43.91" y1="83.95" y2="82.83" gradientTransform="translate(53.86 47.23)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#686868" offset="0"/>
+   <stop stop-color="#454545" offset="1"/>
+  </linearGradient>
+ </defs>
+ <g transform="translate(-8.238 -128.9)" stroke-width="1.278">
+  <circle cx="10.16" cy="130.8" r="1.922" fill="#8d8d8f" style="paint-order:normal"/>
+  <circle cx="10.16" cy="130.8" r="1.75" fill="url(#linearGradient2724-9-7)" style="paint-order:normal"/>
+  <circle cx="10.16" cy="130.3" r="1.054" fill="url(#linearGradient11728-3)" style="paint-order:normal"/>
+  <path d="m8.627 130.7a1.544 1.544 0 0 0-0.0106 0.1719 1.544 1.544 0 0 0 1.544 1.544 1.544 1.544 0 0 0 1.544-1.544 1.544 1.544 0 0 0-0.0111-0.1673 1.601 1.601 0 0 1-1.532 1.139 1.601 1.601 0 0 1-1.534-1.144z" fill="url(#linearGradient2726-0)" style="paint-order:normal"/>
+  <path d="m10.16 129.5c-0.19 0-0.3431 0.1531-0.3431 0.3431v0.686h-0.686c-0.19 0-0.3432 0.1531-0.3432 0.3431s0.1531 0.3429 0.3432 0.3429h0.686v0.6862c0 0.19 0.1531 0.3429 0.3431 0.3429s0.3431-0.1528 0.3431-0.3429v-0.6862h0.686c0.19 0 0.3432-0.1528 0.3432-0.3429 0-0.19-0.1531-0.3431-0.3432-0.3431h-0.686v-0.686c0-0.19-0.1531-0.3431-0.3431-0.3431z" fill="url(#linearGradient11744-0)" style="paint-order:normal"/>
+ </g>
+</svg>

@@ -12,3 +12,4 @@ extern Model* modelLowpassFilterBank;
 extern Model* modelSharpWavefolder;
 extern Model* modelMetallicNoise;
 extern Model* modelMS20VCF;
+extern Model* modelBlank;

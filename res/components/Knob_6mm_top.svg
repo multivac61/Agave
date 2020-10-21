@@ -1,0 +1,13 @@
+<svg width="12mm" height="12mm" version="1.1" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="linearGradient5529" x1="533.1" x2="509.7" y1="191.4" y2="155.1" gradientTransform="matrix(.2922 0 0 .2922 -147 240.2)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#4d4d4d" offset="0"/>
+   <stop stop-color="#333" stop-opacity="0" offset="1"/>
+  </linearGradient>
+ </defs>
+ <g transform="translate(0,-285)">
+  <path d="m6 286.2a4.811 4.811 0 0 0-4.811 4.811 4.811 4.811 0 0 0 4.811 4.811 4.811 4.811 0 0 0 4.811-4.811 4.811 4.811 0 0 0-4.811-4.811zm0 0.2035c2.544 1.2e-4 4.607 2.063 4.607 4.607 1.41e-4 2.545-2.062 4.607-4.607 4.608-2.545-1.1e-4 -4.607-2.063-4.607-4.608 1.01e-4 -2.544 2.063-4.607 4.607-4.607z" fill="#a8aaac" style="paint-order:markers stroke fill"/>
+  <path d="m6 285.2c-3.198 1.4e-4 -5.791 2.593-5.791 5.791-1.839e-4 3.199 2.593 5.792 5.791 5.792 3.199-1.3e-4 5.792-2.593 5.791-5.792-1.35e-4 -3.198-2.593-5.791-5.791-5.791zm0 0.9808c2.657-6e-5 4.811 2.154 4.811 4.811 6.4e-5 2.657-2.154 4.811-4.811 4.811-2.657 7e-5 -4.811-2.154-4.811-4.811-6.4e-5 -2.657 2.154-4.811 4.811-4.811z" fill="url(#linearGradient5529)" style="paint-order:markers stroke fill"/>
+  <circle transform="scale(1,-1)" cx="6" cy="-291" r="6" fill-opacity=".003922" stroke-width=".6439" style="paint-order:stroke fill markers"/>
+ </g>
+</svg>

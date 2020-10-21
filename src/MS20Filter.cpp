@@ -96,28 +96,25 @@ struct MS20VCFWidget : ModuleWidget {
     MS20VCFWidget(MS20VCF* module);
 };
 
+namespace Comps = AgaveComponents;
 MS20VCFWidget::MS20VCFWidget(MS20VCF* module) {
 	setModule(module);
-	box.size = Vec(4 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT);
     setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/MS20.svg")));
-
-    // SCREWS
-    addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH * 1.5, 0)));
-    addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH * 1.5, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+    Comps::createScrews<Comps::ScrewMetal>(*this);
 
     // AUDIO INPUT
-	addInput(createInputCentered<LightPort>(mm2px(Vec(10.16, 20)), module, MS20VCF::SIGNAL_INPUT));
+	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 17.5)), module, MS20VCF::SIGNAL_INPUT));
 
     // FREQUENCY PARAM
-	addParam(createParamCentered<Davies1900hBlackKnob>(mm2px(Vec(10.16, 42.5)), module, MS20VCF::FREQ_PARAM));
-	addParam(createParamCentered<Trimpot>(mm2px(Vec(10.16, 55.0)), module, MS20VCF::CV_ATT_PARAM));
-	addInput(createInputCentered<LightPort>(mm2px(Vec(10.16, 65.0)), module, MS20VCF::FREQ_CV_PARAM));
+	addParam(createParamCentered<Comps::Knob>(mm2px(Vec(8.82, 37.5)), module, MS20VCF::FREQ_PARAM));
+	addParam(createParamCentered<Comps::SmallKnob>(mm2px(Vec(10.16, 55.0)), module, MS20VCF::CV_ATT_PARAM));
+	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 62.5)), module, MS20VCF::FREQ_CV_PARAM));
 
     // Resonance PARAM
-	addParam(createParamCentered<Davies1900hBlackKnob>(mm2px(Vec(10.16, 90)), module, MS20VCF::RES_PARAM));
+	addParam(createParamCentered<Comps::Knob>(mm2px(Vec(8.82, 82.5)), module, MS20VCF::RES_PARAM));
 
     // AUDIO OUTPUT
-	addOutput(createOutputCentered<DarkPort>(mm2px(Vec(10.16, 115)), module, MS20VCF::SIGNAL_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 110.5)), module, MS20VCF::SIGNAL_OUTPUT));
 }
 
 Model* modelMS20VCF = createModel<MS20VCF, MS20VCFWidget>("MS20VCF");

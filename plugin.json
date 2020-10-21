@@ -47,6 +47,14 @@
         "Physical modeling",
         "Effect"
       ]
+    },
+    {
+      "slug": "AgaveBlank",
+      "name": "AgaveBlank",
+      "description": "",
+      "tags": [
+        "Blank"
+      ]
     }
   ]
 }

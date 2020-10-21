@@ -90,25 +90,22 @@ struct LowpassFilterBankWidget : ModuleWidget {
     LowpassFilterBankWidget(LowpassFilterBank* module);
 };
 
+namespace Comps = AgaveComponents;
 LowpassFilterBankWidget::LowpassFilterBankWidget(LowpassFilterBank* module) {
 	setModule(module);
-	box.size = Vec(4 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT);
     setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/LPFBank.svg")));
-
-    // SCREWS
-    addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH * 1.5, 0)));
-    addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH * 1.5, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+    Comps::createScrews<Comps::ScrewMetal>(*this);
 
 	// SIGNAL INPUT
-	addInput(createInputCentered<LightPort>(mm2px(Vec(10.16, 20)), module, LowpassFilterBank::SIGNAL_INPUT));
+	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 17.5)), module, LowpassFilterBank::SIGNAL_INPUT));
 
 	// FILTERED OUTPUTS
-	addOutput(createOutputCentered<DarkPort>(mm2px(Vec(10.16, 40.0)), module, LowpassFilterBank::FILTER_LOW_OUTPUT));
-	addOutput(createOutputCentered<DarkPort>(mm2px(Vec(10.16, 55.0)), module, LowpassFilterBank::FILTER_198_OUTPUT));
-	addOutput(createOutputCentered<DarkPort>(mm2px(Vec(10.16, 70.0)), module, LowpassFilterBank::FILTER_373_OUTPUT));
-	addOutput(createOutputCentered<DarkPort>(mm2px(Vec(10.16, 85.5)), module, LowpassFilterBank::FILTER_692_OUTPUT));
-	addOutput(createOutputCentered<DarkPort>(mm2px(Vec(10.16, 100.0)), module, LowpassFilterBank::FILTER_1411_OUTPUT));
-	addOutput(createOutputCentered<DarkPort>(mm2px(Vec(10.16, 115.0)), module, LowpassFilterBank::FILTER_HIGH_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 35.0)), module, LowpassFilterBank::FILTER_LOW_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 50.0)), module, LowpassFilterBank::FILTER_198_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 65.0)), module, LowpassFilterBank::FILTER_373_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 80.5)), module, LowpassFilterBank::FILTER_692_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 95.0)), module, LowpassFilterBank::FILTER_1411_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 110.0)), module, LowpassFilterBank::FILTER_HIGH_OUTPUT));
 }
 
 Model* modelLowpassFilterBank = createModel<LowpassFilterBank, LowpassFilterBankWidget>("LowpassFilterBank");
