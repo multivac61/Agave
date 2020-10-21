@@ -1,22 +1,33 @@
-This repository is a port of Fabian Esqueda's [Agave](https://github.com/fabianesqueda/Agave) modules for VCV Rack, updated for Rack version 1. So far the only changes made to the original code have made with the intention of allowing the plugin to compile with the latest VCV Rack API, no other changes have been made.
-
 # Agave
 
-This is a collection of free open-source modules for VCV Rack. This is an ongoing project, so the number of modules is likely to grow rapidly over the following weeks!
+This repository is an official port of Fabian Esqueda's [Agave](https://github.com/fabianesqueda/Agave) modules for VCV Rack, updated for Rack version 1.
 
-For the time being, these modules are only available via this repository. They haven't been packaged for distribution yet. Instructions on how to load these modules into your VCV Rack development environment can be found [here](https://github.com/VCVRack/Rack) under "Building plugins".
+<img src="./doc/Screenshots/SharpWavefolder.png" alt="Pic" height="300"><img src="./doc/Screenshots/MetallicNoise.png" alt="Pic" height="300"><img src="./doc/Screenshots/LowpassFilterBank.png" alt="Pic" height="300"><img src="./doc/Screenshots/MS20VCF.png" alt="Pic" height="300"><img src="./doc/Screenshots/AgaveBlank.png" alt="Pic" height="300">
 
-### FΛLDER
+For more information, see the [user manual](./doc/Manual.md).
 
-This module implements a "wavefolding" operation on the incoming signal. Wavefolding is a operation in which signal values that exceed certain treshold are inverted or folded back (hence the name of the effect). When driven by a signal with low harmonic content (e.g. a sinusoid or triangular oscillator) this module generates complex harmonically-rich waveforms, making it ideal for a West Coast-style patch.
+## Building
 
-### METALLIC
+To build the Agave plugin from source, you must first set up the [VCV Rack development environment](https://vcvrack.com/manual/Building#building-rack-plugins). Then the plugin can be build as follows:
 
-This module generates "metallic" or "pitched" noise inspired by the multi-oscillator arrays used in the Roland TR-808 and TR-606 drum machines to synthesize cymbal and hi-hat sounds. A great reference on cymbal synthesis using metallic noise can be found [here](https://web.archive.org/web/20160403120912/http://www.soundonsound.com/sos/Jul02/articles/synthsecrets0702.asp).
+```bash
+$ git clone https://github.com/jatinchowdhury18/Agave
 
-### LPF Bank
+$ cd Agave
 
-This module implements a passive RC filter bank ideal for separating wideband signals, such as noise, into sub-bands. Perfect for percussive patches.
+$ make install
+```
 
--Fabian Esqueda
-01/2018
+## Credits
+
+The following people have contributed to this plugin:
+
+- Fabian Esqueda: original author
+- David Rodriguez: graphic designer
+- Jatin Chowdhury: maintainer
+
+The Agave modules use the [Urbanist](https://github.com/coreywho/Urbanist) font, licensed under the Open Font License.
+
+## License
+
+Agave modules are open-source under the Creative Commons license. Enjoy!
