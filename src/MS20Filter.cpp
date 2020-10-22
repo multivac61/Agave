@@ -10,6 +10,11 @@
 #include "dsp/MS20Filter.hpp"
 #include "Components.hpp"
 
+namespace {
+    constexpr float minCutoff = 50.0;
+	constexpr float maxCutoff = 15.0e3;
+}
+
 struct MS20VCF : Module {
 
 	enum ParamIds {
@@ -38,7 +43,7 @@ struct MS20VCF : Module {
 
 	MS20VCF() {
         config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
-        configParam(FREQ_PARAM, 0.f, 1.f, 0.5f, "Frequency");
+        configParam(FREQ_PARAM, 0.f, 1.f, 0.5f, "Frequency", " Hz", maxCutoff / minCutoff, minCutoff);
         configParam(CV_ATT_PARAM, -1.0f, 1.0f, 0.0f, "CV Attenuverter");
         configParam(RES_PARAM, 0.f, 2.f, 0.0f, "Resonance");
 
@@ -70,8 +75,6 @@ void MS20VCF::step() {
 	    // Set cutoff frequency
 	    float cutoffCV = params[FREQ_PARAM].value + params[CV_ATT_PARAM].value*inputs[FREQ_CV_PARAM].value*0.2f;
 	    cutoffCV = clamp(cutoffCV, 0.0f, 1.0f);
-	    constexpr float minCutoff = 50.0;
-	    constexpr float maxCutoff = 15.0e3;
 	    float fc = minCutoff * powf(maxCutoff / minCutoff, cutoffCV);
 
 	    // Read resonance
@@ -103,18 +106,18 @@ MS20VCFWidget::MS20VCFWidget(MS20VCF* module) {
     Comps::createScrews<Comps::ScrewMetal>(*this);
 
     // AUDIO INPUT
-	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 17.5)), module, MS20VCF::SIGNAL_INPUT));
+	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 21.25)), module, MS20VCF::SIGNAL_INPUT));
 
     // FREQUENCY PARAM
 	addParam(createParamCentered<Comps::Knob>(mm2px(Vec(8.82, 37.5)), module, MS20VCF::FREQ_PARAM));
 	addParam(createParamCentered<Comps::SmallKnob>(mm2px(Vec(10.16, 55.0)), module, MS20VCF::CV_ATT_PARAM));
-	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 62.5)), module, MS20VCF::FREQ_CV_PARAM));
+	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 63.0)), module, MS20VCF::FREQ_CV_PARAM));
 
     // Resonance PARAM
-	addParam(createParamCentered<Comps::Knob>(mm2px(Vec(8.82, 82.5)), module, MS20VCF::RES_PARAM));
+	addParam(createParamCentered<Comps::Knob>(mm2px(Vec(8.82, 80.0)), module, MS20VCF::RES_PARAM));
 
     // AUDIO OUTPUT
-	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 110.5)), module, MS20VCF::SIGNAL_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 105.0)), module, MS20VCF::SIGNAL_OUTPUT));
 }
 
 Model* modelMS20VCF = createModel<MS20VCF, MS20VCFWidget>("MS20VCF");

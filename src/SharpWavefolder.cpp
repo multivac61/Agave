@@ -108,9 +108,9 @@ SharpWavefolderWidget::SharpWavefolderWidget(SharpWavefolder* module) {
 	addParam(createParamCentered<Comps::SmallKnob>(mm2px(Vec(10.16, 90.0)), module, SharpWavefolder::SYMM_ATT_PARAM));
 
 	// IN JACKS
-	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 17.5)), module, SharpWavefolder::SIGNAL_INPUT));
-	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 57.5)), module, SharpWavefolder::FOLD_CV_INPUT));
-	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 97.5)), module, SharpWavefolder::SYMM_CV_INPUT));
+	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 18.75)), module, SharpWavefolder::SIGNAL_INPUT));
+	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 58.0)), module, SharpWavefolder::FOLD_CV_INPUT));
+	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 98.0)), module, SharpWavefolder::SYMM_CV_INPUT));
 
 	// OUT JACKS
 	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 110.0)), module, SharpWavefolder::FOLDED_OUTPUT));

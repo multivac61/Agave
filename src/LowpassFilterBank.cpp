@@ -97,15 +97,15 @@ LowpassFilterBankWidget::LowpassFilterBankWidget(LowpassFilterBank* module) {
     Comps::createScrews<Comps::ScrewMetal>(*this);
 
 	// SIGNAL INPUT
-	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 17.5)), module, LowpassFilterBank::SIGNAL_INPUT));
+	addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 22.5)), module, LowpassFilterBank::SIGNAL_INPUT));
 
 	// FILTERED OUTPUTS
-	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 35.0)), module, LowpassFilterBank::FILTER_LOW_OUTPUT));
-	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 50.0)), module, LowpassFilterBank::FILTER_198_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 40.0)), module, LowpassFilterBank::FILTER_LOW_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 52.5)), module, LowpassFilterBank::FILTER_198_OUTPUT));
 	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 65.0)), module, LowpassFilterBank::FILTER_373_OUTPUT));
-	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 80.5)), module, LowpassFilterBank::FILTER_692_OUTPUT));
-	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 95.0)), module, LowpassFilterBank::FILTER_1411_OUTPUT));
-	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 110.0)), module, LowpassFilterBank::FILTER_HIGH_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 77.5)), module, LowpassFilterBank::FILTER_692_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 90.0)), module, LowpassFilterBank::FILTER_1411_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 102.5)), module, LowpassFilterBank::FILTER_HIGH_OUTPUT));
 }
 
 Model* modelLowpassFilterBank = createModel<LowpassFilterBank, LowpassFilterBankWidget>("LowpassFilterBank");

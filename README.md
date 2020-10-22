@@ -23,8 +23,8 @@ $ make install
 The following people have contributed to this plugin:
 
 - Fabian Esqueda: original author
-- David Rodriguez: graphic designer
-- Jatin Chowdhury: maintainer
+- David Rodriguez: drawing
+- Jatin Chowdhury: code maintenance
 
 The Agave modules use the [Urbanist](https://github.com/coreywho/Urbanist) font, licensed under the Open Font License.
 
