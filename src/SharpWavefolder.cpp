@@ -98,7 +98,7 @@ struct SharpWavefolderWidget : ModuleWidget {
 namespace Comps = AgaveComponents;
 SharpWavefolderWidget::SharpWavefolderWidget(SharpWavefolder* module) {
 	setModule(module);
-    setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/FXLD.svg")));
+    setPanel(APP->window->loadSvg(asset::plugin(pluginInstance, "res/Fxld.svg")));
     Comps::createScrews<Comps::ScrewMetal>(*this);
 
 	// KNOBS
