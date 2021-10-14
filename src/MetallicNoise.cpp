@@ -51,6 +51,9 @@ struct MetallicNoise : Module {
 	MetallicNoise() {
         config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
 
+        configOutput(NOISE_808_OUTPUT, "808");
+        configOutput(NOISE_606_OUTPUT, "606");
+
 		for(auto &squareWave : squareWaves808)
 			squareWave.setSampleRate(sampleRate);
 		for(auto &squareWave : squareWaves606)
@@ -102,8 +105,8 @@ MetallicNoiseWidget::MetallicNoiseWidget(MetallicNoise* module) {
     Comps::createScrews<Comps::ScrewMetal>(*this);
 
 	// SINE OUTPUT
-	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 40.0)), module, MetallicNoise::NOISE_808_OUTPUT));
-	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 80.0)), module, MetallicNoise::NOISE_606_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 40.0)), module, MetallicNoise::NOISE_606_OUTPUT));
+	addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 80.0)), module, MetallicNoise::NOISE_808_OUTPUT));
 }
 
 Model* modelMetallicNoise = createModel<MetallicNoise, MetallicNoiseWidget>("MetallicNoise");

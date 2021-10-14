@@ -47,6 +47,12 @@ struct SharpWavefolder : Module {
 
 	SharpWavefolder() {
         config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
+
+        configInput(SIGNAL_INPUT, "Signal");
+        configInput(FOLD_CV_INPUT, "Fold CV");
+        configInput(SYMM_CV_INPUT, "Symmetry CV");
+        configOutput(FOLDED_OUTPUT, "Signal");
+
         configParam(FOLDS_PARAM, 0.9f, 10.f, 0.9f, "Folds");
         configParam(FOLD_ATT_PARAM, -1.0f, 1.0f, 0.0f, "Folds CV");
         configParam(SYMM_PARAM, -5.0f, 5.0f, 0.0f, "Symmetry");

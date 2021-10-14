@@ -45,6 +45,14 @@ struct LowpassFilterBank : Module {
 	// Derived class constructor
 	LowpassFilterBank() {
         config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
+
+        configInput(SIGNAL_INPUT, "Signal");
+        configOutput(FILTER_LOW_OUTPUT, "Low frequency");
+        configOutput(FILTER_198_OUTPUT, "198 Hz");
+        configOutput(FILTER_373_OUTPUT, "373 Hz");
+        configOutput(FILTER_692_OUTPUT, "692 Hz");
+        configOutput(FILTER_1411_OUTPUT, "1411 Hz");
+        configOutput(FILTER_HIGH_OUTPUT, "High frequency");
 		
 		// Initialize filters
 		auto *fc = begin(cutoffFrequencies);
