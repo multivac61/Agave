@@ -145,7 +145,7 @@ stages:
         - task: GitHubRelease@0
           displayName: "Update Github Release"
           inputs:
-            gitHubConnection: 'jatinchowdhury18'
+            gitHubConnection: 'jatinchowdhury18-github-connection'
             repositoryName: 'jatinchowdhury18/Agave'
             action: 'edit'
             target: '$(Build.SourceVersion)'
