@@ -13,8 +13,9 @@
 #include <iostream>
 #include <array>
 
-#include "dsp/Waveshaping.hpp"
 #include "Components.hpp"
+#include "dsp/Filters.hpp"
+#include "dsp/Waveshaping.hpp"
 
 struct SharpWavefolder : Module {
 
@@ -45,7 +46,10 @@ struct SharpWavefolder : Module {
 
 	HardClipper clipper;
 
-	SharpWavefolder() {
+    static constexpr float dcFreq = 10.0f;
+    DCBlocker dcBlocker { dcFreq, sampleRate };
+
+    SharpWavefolder() {
         config(NUM_PARAMS, NUM_INPUTS, NUM_OUTPUTS, NUM_LIGHTS);
 
         configInput(SIGNAL_INPUT, "Signal");
@@ -62,7 +66,6 @@ struct SharpWavefolder : Module {
 
 	void step() override;
 	void onSampleRateChange() override;
-
 };
 
 void SharpWavefolder::step() {
@@ -90,12 +93,14 @@ void SharpWavefolder::step() {
 	foldedOutput = clipper.getClippedOutput();
 
 	// Send samples to output
-	outputs[FOLDED_OUTPUT].value = 5.0f * foldedOutput;
+    dcBlocker.process(foldedOutput);
+	outputs[FOLDED_OUTPUT].value = 5.0f * dcBlocker.getFilteredOutput();
 
 }
 
 void SharpWavefolder::onSampleRateChange() {
 	sampleRate = APP->engine->getSampleRate();
+    dcBlocker.setSampleRate(sampleRate);
 }
 
 struct SharpWavefolderWidget : ModuleWidget {
