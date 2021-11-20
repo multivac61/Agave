@@ -47,6 +47,7 @@ struct MS20VCF : Module {
         configInput(SIGNAL_INPUT, "Signal");
         configInput(FREQ_CV_PARAM, "Frequency CV");
         configOutput(SIGNAL_OUTPUT, "Signal");
+        configBypass(SIGNAL_INPUT, SIGNAL_OUTPUT);
 
         configParam(FREQ_PARAM, 0.f, 1.f, 0.5f, "Frequency", " Hz", maxCutoff / minCutoff, minCutoff);
         configParam(CV_ATT_PARAM, -1.0f, 1.0f, 0.0f, "CV Attenuverter");
