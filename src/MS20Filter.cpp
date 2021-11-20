@@ -93,7 +93,7 @@ void MS20VCF::step() {
 	filter.process(input);
 
 	// Send samples to output buffer 
-	outputs[SIGNAL_OUTPUT].value = 1.0f * filter.getOutput();
+	outputs[SIGNAL_OUTPUT].value = 5.0f * filter.getOutput();
 
 }
 
