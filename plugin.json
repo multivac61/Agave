@@ -11,7 +11,7 @@
   "manualUrl": "https://github.com/jatinchowdhury18/Agave/blob/master/doc/Manual.md",
   "sourceUrl": "https://github.com/jatinchowdhury18/Agave",
   "donateUrl": "",
-  "changelogUrl": "",
+  "changelogUrl": "https://github.com/jatinchowdhury18/Agave/blob/master/CHANGELOG.md",
   "modules": [
     {
       "slug": "LowpassFilterBank",
