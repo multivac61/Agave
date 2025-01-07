@@ -130,6 +130,8 @@ struct SharpWavefolder : Module {
     }
 };
 
+namespace Comps = AgaveComponents;
+
 struct SharpWavefolderWidget : ModuleWidget {
     SharpWavefolderWidget(SharpWavefolder* module) {
         setModule(module);

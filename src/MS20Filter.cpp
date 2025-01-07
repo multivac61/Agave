@@ -120,6 +120,8 @@ struct MS20VCF : Module {
     }
 };
 
+namespace Comps = AgaveComponents;
+
 struct MS20VCFWidget : ModuleWidget {
     MS20VCFWidget(MS20VCF* module) {
         setModule(module);

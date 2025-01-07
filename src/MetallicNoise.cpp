@@ -111,6 +111,8 @@ struct MetallicNoise : Module {
     }
 };
 
+namespace Comps = AgaveComponents;
+
 struct MetallicNoiseWidget : ModuleWidget {
     MetallicNoiseWidget(MetallicNoise* module) {
         setModule(module);

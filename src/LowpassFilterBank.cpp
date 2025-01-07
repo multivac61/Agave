@@ -108,6 +108,8 @@ struct LowpassFilterBank : Module {
     }
 };
 
+namespace Comps = AgaveComponents;
+
 struct LowpassFilterBankWidget : ModuleWidget {
     LowpassFilterBankWidget(LowpassFilterBank* module) {
         setModule(module);
