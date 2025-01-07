@@ -100,15 +100,6 @@ struct MetallicNoise : Module {
                 squareWave.setSampleRate(APP->engine->getSampleRate());
         }
     }
-
-    void onReset() override {
-        for (int c = 0; c < MAX_POLY; c++) {
-            for (auto &squareWave : squareWaves808[c])
-                squareWave.reset();
-            for (auto &squareWave : squareWaves606[c])
-                squareWave.reset();
-        }
-    }
 };
 
 namespace Comps = AgaveComponents;

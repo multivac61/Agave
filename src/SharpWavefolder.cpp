@@ -64,10 +64,8 @@ struct SharpWavefolder : Module {
         configParam(SYMM_ATT_PARAM, -1.0f, 1.0f, 0.0f, "Symmetry CV attenuverter", "%", 0, 100);
 
         // Initialize all filters
-        for (int c = 0; c < MAX_POLY; c++) {
+        for (int c = 0; c < MAX_POLY; c++)
             dcBlocker[c].setSampleRate(sampleRate);
-            dcBlocker[c].setFrequency(dcFreq);
-        }
     }
 
     void process(const ProcessArgs& args) override {
@@ -114,19 +112,8 @@ struct SharpWavefolder : Module {
 
     void onSampleRateChange() override {
         sampleRate = APP->engine->getSampleRate();
-        for (int c = 0; c < MAX_POLY; c++) {
+        for (int c = 0; c < MAX_POLY; c++)
             dcBlocker[c].setSampleRate(sampleRate);
-        }
-    }
-
-    void onReset() override {
-        for (int c = 0; c < MAX_POLY; c++) {
-            for (auto &f : folder[c]) {
-                f.reset();
-            }
-            clipper[c].reset();
-            dcBlocker[c].reset();
-        }
     }
 };
 
