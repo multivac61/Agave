@@ -25,6 +25,7 @@ struct MS20VCF : Module {
     enum InputIds {
         SIGNAL_INPUT,
         FREQ_CV_PARAM,
+        RES_CV_PARAM,
         NUM_INPUTS
     };
     enum OutputIds {
@@ -47,6 +48,7 @@ struct MS20VCF : Module {
 
         configInput(SIGNAL_INPUT, "Signal");
         configInput(FREQ_CV_PARAM, "Frequency CV");
+        configInput(RES_CV_PARAM, "Resonance CV");
         configOutput(SIGNAL_OUTPUT, "Signal");
         configBypass(SIGNAL_INPUT, SIGNAL_OUTPUT);
 
@@ -74,7 +76,7 @@ struct MS20VCF : Module {
 
     void process(const ProcessArgs& args) override {
         // Get number of polyphonic channels from input
-        int channels = std::max(inputs[SIGNAL_INPUT].getChannels(), inputs[FREQ_CV_PARAM].getChannels());
+        int channels = std::max({inputs[SIGNAL_INPUT].getChannels(), inputs[FREQ_CV_PARAM].getChannels(), inputs[RES_CV_PARAM].getChannels()});
 
         // Set output channels to match input
         outputs[SIGNAL_OUTPUT].setChannels(channels);
@@ -88,6 +90,7 @@ struct MS20VCF : Module {
             for (int c = 0; c < channels; c++) {
                 // Get CV for this channel (or use channel 0 if mono CV)
                 float freqCV = inputs[FREQ_CV_PARAM].getPolyVoltage(c);
+                float resCV = inputs[RES_CV_PARAM].getPolyVoltage(c);
 
                 // Calculate cutoff frequency
                 float cutoffCV = baseFreq + cvAtt * freqCV * 0.2f;
@@ -95,7 +98,7 @@ struct MS20VCF : Module {
                 float fc = minCutoff * powf(maxCutoff / minCutoff, cutoffCV);
 
                 // Update filter parameters for this channel
-                filters[c].setParams(fc, resonance);
+                filters[c].setParams(fc, resonance + resCV);
             }
         }
 
@@ -139,6 +142,7 @@ struct MS20VCFWidget : ModuleWidget {
 
         // Resonance PARAM
         addParam(createParamCentered<Comps::Knob>(mm2px(Vec(8.82, 80.0)), module, MS20VCF::RES_PARAM));
+        addInput(createInputCentered<Comps::InputPort>(mm2px(Vec(10.16, 93.0)), module, MS20VCF::RES_CV_PARAM));
 
         // AUDIO OUTPUT
         addOutput(createOutputCentered<Comps::OutputPort>(mm2px(Vec(10.16, 105.0)), module, MS20VCF::SIGNAL_OUTPUT));
