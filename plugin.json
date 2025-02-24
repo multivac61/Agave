@@ -19,7 +19,8 @@
       "description": "Bank of RC lowpass filters",
       "manualUrl": "https://github.com/jatinchowdhury18/Agave/blob/master/doc/Manual.md#LPFBank",
       "tags": [
-        "Filter"
+        "Filter",
+        "Polyphonic"
       ]
     },
     {
@@ -29,7 +30,8 @@
       "manualUrl": "https://github.com/jatinchowdhury18/Agave/blob/master/doc/Manual.md#FXLD",
       "tags": [
         "Waveshaper",
-        "Effect"
+        "Effect",
+        "Polyphonic"
       ]
     },
     {
@@ -38,7 +40,8 @@
       "description": "Noise generator for cymbals",
       "manualUrl": "https://github.com/jatinchowdhury18/Agave/blob/master/doc/Manual.md#Metal",
       "tags": [
-        "Noise"
+        "Noise",
+        "Polyphonic"
       ]
     },
     {
@@ -49,7 +52,8 @@
       "tags": [
         "Filter",
         "Physical modeling",
-        "Effect"
+        "Effect",
+        "Polyphonic"
       ]
     },
     {
